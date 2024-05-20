@@ -1,1 +1,2 @@
-./pytalk/venv/
+/pytalk/venv/
+/**/__pycache__/
