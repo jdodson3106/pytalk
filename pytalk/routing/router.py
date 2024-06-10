@@ -1,4 +1,4 @@
 
 class Router:
     def __init__(self):
-        print("yep")
+        print("setting up routing...")
