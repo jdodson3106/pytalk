@@ -2,6 +2,7 @@ import socketserver
 import sys
 
 from server.request_handler import PytalkRequestHandler
+from routing import router
 
 
 class PytalkServer:
@@ -35,3 +36,5 @@ class PytalkServer:
         """
         if self.port is None:
             self.port = 0  # let the os pick the port
+
+        self.router = router.Router()
