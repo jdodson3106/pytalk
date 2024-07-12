@@ -2,7 +2,7 @@ from server.server import PytalkServer
 
 
 def main():
-    server = PytalkServer()
+    server = PytalkServer(port=8080)
     server.start()
 
 
