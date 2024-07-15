@@ -23,7 +23,7 @@ class Request():
         for key, value in self.__dict__.items():
             if key.startswith("_"): continue
             items[key] = value
-        return f"Request({(items)})"
+        return f"Request({items})"
             
 
     @property
