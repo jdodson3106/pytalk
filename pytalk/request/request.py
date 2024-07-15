@@ -1,7 +1,6 @@
 from pytalk.logger.logger import get_logger
-from itertools import starmap
 from pytalk.request.exceptions import NonAllowedMethodException
-from typing import Tuple, Dict
+from http.client import HTTPMessage
 
 class Request():
     """ Basic Request object. Currently only accepts text/html as body,
@@ -10,14 +9,22 @@ class Request():
 
     _ALLOWED_METHODS: set = {"GET", "POST"}
 
-    def __init__(self, method: str, path: str, body="", headers={}):
+    def __init__(self, method: str, path: str, form_data={}, headers={}):
         self.method = method
         self.params = {}
-        self.base_url = ""
+        #self.base_url = ""
         self.path: str = path
-        self.body: str = body
-        self.headers: dict = headers
+        self.form_data: dict = form_data
+        self.headers: HTTPMessage = headers
 
+    # print all instance variables, but ignore properties, like self._method
+    def __repr__(self):
+        items = {}
+        for key, value in self.__dict__.items():
+            if key.startswith("_"): continue
+            items[key] = value
+        return f"Request({(items)})"
+            
 
     @property
     def method(self):
@@ -39,7 +46,7 @@ class Request():
 
     def _parse_path(self) -> None:
         path_parts = self.path.split("?")
-        self.base_url = path_parts[0]
+        #self.base_url = path_parts[0]
         
         if len(path_parts) > 1:
 
@@ -68,13 +75,9 @@ class Request():
 
 if __name__ == "__main__":
 
-    logger = get_logger()
+    logger = get_logger(name="root")
     request = Request(
         method="GET", 
-        path="https://www.website.com/brawndo?foo=bar&plants=crave", 
+        path="/brawndo?foo=bar&plants=crave", 
     )
-
-    logger.info(request.path)
-    logger.info(request.base_url)
-    logger.info(request.params)
-
+    logger.info(request)
