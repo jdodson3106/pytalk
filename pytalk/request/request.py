@@ -21,10 +21,14 @@ class Request():
     def __repr__(self):
         items = {}
         for key, value in self.__dict__.items():
-            if key.startswith("_"): continue
+            if key.startswith("_"): 
+                continue
+            if key == "headers": 
+                items["headers"] = {key: value for key, value in self.headers.items()}
+                continue
             items[key] = value
+        
         return f"Request({items})"
-            
 
     @property
     def method(self):
