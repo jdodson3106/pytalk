@@ -9,13 +9,13 @@ class Request():
 
     _ALLOWED_METHODS: set = {"GET", "POST"}
 
-    def __init__(self, method: str, path: str, form_data={}, headers={}):
+    def __init__(self, method: str, path: str, headers: HTTPMessage, body=""):
         self.method = method
         self.params = {}
         #self.base_url = ""
+        self.headers = headers
         self.path: str = path
-        self.form_data: dict = form_data
-        self.headers: HTTPMessage = headers
+        self.body: list = body
 
     # print all instance variables, but ignore properties, like self._method
     def __repr__(self):
