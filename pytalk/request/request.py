@@ -15,9 +15,10 @@ class Request():
         #self.base_url = ""
         self.headers = headers
         self.path: str = path
-        self.body: list = body
+        self.body: str = body 
 
     # print all instance variables, but ignore properties, like self._method
+    # HOWEVER, although this is ignoring _method, it's not catching method :/
     def __repr__(self):
         items = {}
         for key, value in self.__dict__.items():
@@ -29,6 +30,33 @@ class Request():
             items[key] = value
         
         return f"Request({items})"
+    
+
+    @property
+    def body(self):
+        return self._body
+    
+    @body.setter
+    def body(self, value: str):
+
+        content_type = self.headers.get("Content-Type")
+        if content_type == None:
+            self._body = ""
+            return
+        if content_type == "text/html":
+            self._body = value
+        elif content_type.split(";")[0] == "multipart/form-data": 
+            body_lines = value.split("\r\n")
+            form_data = {}
+            for i, body_line in enumerate(body_lines): 
+                if not body_line:
+                    continue
+                if "name=" in body_line:
+                    key = body_line.split("name=")[-1][1:-1] #strip quotes
+                    value = body_lines[i+2]
+                    form_data[key] = value
+            self._body = form_data
+
 
     @property
     def method(self):
