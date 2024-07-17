@@ -1,9 +1,10 @@
 import socketserver
 import sys
-
 from pytalk.server.request_handler import PytalkRequestHandler
 from pytalk.routing.router import Router
+from pytalk.logger.logger import get_logger
 
+logger = get_logger()
 
 class PytalkServer:
 
@@ -23,10 +24,10 @@ class PytalkServer:
             self.server.server_activate()
         except Exception as e:
             self.server.server_close()
-            print(f"error starting the server :: {e}")
+            logger.error(f"error starting the server :: {e}")
             sys.exit(1)
 
-        print(f"Pytalk Server running at {self.server.server_address[0]}:{self.server.server_address[1]}")
+        logger.info(f"Pytalk Server running at {self.server.server_address[0]}:{self.server.server_address[1]}")
         self.server.serve_forever(0.1)
 
     def _pre_start(self):

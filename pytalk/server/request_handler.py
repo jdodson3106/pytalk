@@ -1,5 +1,8 @@
 from http.server import BaseHTTPRequestHandler
 from request.request import Request
+from pytalk.logger.logger import get_logger
+
+logger = get_logger()
 
 class PytalkRequestHandler(BaseHTTPRequestHandler):
 
@@ -35,5 +38,5 @@ class PytalkRequestHandler(BaseHTTPRequestHandler):
             form_data = form_data,
             headers = self.headers
         )
-        print(request.headers)
+        logger.info(request)
         return request
