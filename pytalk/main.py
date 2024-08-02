@@ -1,4 +1,4 @@
-from server.server import PytalkServer
+from pytalk.server.server import PytalkServer
 
 
 def main():

@@ -18,6 +18,7 @@ class PytalkServer:
                 bind_and_activate=False)
 
     def start(self):
+        logger.info("Attempting to start server")
         self._pre_start()
         try:
             self.server.server_bind()
